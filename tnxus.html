@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UrbanThread - Kaos Premium Limited Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#0f0f1a;color:#fff}
+.top-bar{background:linear-gradient(90deg,#ff00ff,#00f5ff);text-align:center;padding:8px;font-size:13px;font-weight:600;letter-spacing:1px}
+header{background:rgba(15,15,26,0.7);backdrop-filter:blur(12px);padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.1)}
+header h1{font-size:26px;background:linear-gradient(90deg,#00f5ff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+.cart-btn{background:linear-gradient(90deg,#25D366,#1ebe5b);border:none;color:#fff;padding:10px 18px;border-radius:12px;cursor:pointer;font-weight:600;box-shadow:0 4px 15px rgba(37,211,102,0.4);transition:.3s}
+.cart-btn:hover{transform:scale(1.05)}
+.hero{text-align:center;padding:70px 20px;background:radial-gradient(circle at top,#1a1a2e 0%,#0f0f1a 100%)}
+.hero h2{font-size:40px;margin-bottom:12px}
+.hero p{color:#aaa;font-size:18px;max-width:600px;margin:auto}
+.produk-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;padding:60px 40px;max-width:1200px;margin:auto}
+.card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;overflow:hidden;backdrop-filter:blur(10px);transition:.4s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-8px);border-color:rgba(0,245,255,0.4)}
+.slider-container{position:relative;width:100%;height:320px;overflow:hidden}
+.slider-wrapper{display:flex;transition:transform 0.4s ease}
+.slider-wrapper img{width:100%;height:320px;object-fit:cover;flex-shrink:0}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#fff;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:18px;z-index:2}
+.slider-btn:hover{background:rgba(0,245,255,0.8)}
+.prev{left:10px}.next{right:10px}
+.dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:.3s}
+.dot.active{background:#00f5ff}
+.card-body{padding:20px;flex-grow:1;display:flex;flex-direction:column}
+.card-body h3{font-size:19px;margin-bottom:8px}
+.desc{font-size:14px;color:#bbb;line-height:1.6;margin-bottom:12px;flex-grow:1}
+.harga{color:#00f5ff;font-weight:700;font-size:23px;margin:10px 0;transition:.3s}
+select,input[type=number]{width:100%;padding:9px;margin:5px 0;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff}
+.btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;background:linear-gradient(90deg,#ff00ff,#00f5ff);color:#fff;font-weight:600;cursor:pointer;transition:.3s}
+.btn:hover{box-shadow:0 0 20px rgba(0,245,255,0.5)}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:200;overflow-y:auto}
+.modal-box{background:rgba(20,20,35,0.95);border:1px solid rgba(255,255,255,0.1);width:90%;max-width:480px;margin:60px auto;padding:25px;border-radius:20px}
+.modal-box h2{margin-bottom:15px;text-align:center}
+.no-faktur{background:rgba(0,245,255,0.1);border:1px dashed #00f5ff;padding:10px;border-radius:10px;text-align:center;margin-bottom:15px;font-weight:600;color:#00f5ff;letter-spacing:1px}
+.item-keranjang{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.item-info{flex-grow:1}
+.btn-hapus{background:#ff3b3b;border:none;color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:12px;margin-left:10px;transition:.2s}
+.btn-hapus:hover{background:#ff1a1a}
+.total{font-weight:700;font-size:20px;text-align:right;margin-top:15px;color:#00f5ff}
+.form-group{margin-top:15px;text-align:left}
+.form-group label{display:block;font-size:14px;margin-bottom:5px;color:#aaa}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;font-size:14px}
+.btn-wa{background:linear-gradient(90deg,#25D366,#1ebe5b);margin-top:20px}
+.close{float:right;cursor:pointer;font-size:24px}
+footer{text-align:center;padding:30px;background:#0a0a14;color:#888;margin-top:50px}
+footer h4{color:#fff;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div class="top-bar">🔥 GRATIS ONGKIR SE-JABODETABEK | BANK TRANSFER & E-WALLET ONLY 🔥</div>
+
+<header>
+  <h1>UrbanThread</h1>
+  <button class="cart-btn" onclick="bukaKeranjang()">Keranjang <span id="cartCount">0</span></button>
+</header>
+
+<section class="hero">
+  <h2>Tampil Beda, Rasa Nyaman</h2>
+  <p>Kaos premium cotton combed 30s, sablon DTG anti crack. Didesain anak muda, dipakai semua kalangan. Limited stock!</p>
+</section>
+
+<section class="produk-wrap">
+  <!-- PRODUK 1 - HARGA DASAR 139000 -->
+  <div class="card" data-nama="Kaos Oversize Black" data-harga="139000">
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500" alt="Depan">
+        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500" alt="Belakang">
+        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500" alt="Detail Sablon">
+      </div>
+      <button class="slider-btn prev" onclick="geserSlide(this,-1)">‹</button>
+      <button class="slider-btn next" onclick="geserSlide(this,1)">›</button>
+      <div class="dots"></div>
+    </div>
+    <div class="card-body">
+      <h3>Kaos Oversize Black</h3>
+      <p class="desc">Bahan cotton combed 30s premium, adem dan nggak gerah. Cutting oversize modern cocok untuk streetwear.</p>
+      <select class="bahan" onchange="updateHarga(this)">
+        <option value="30s" data-tambah="0">Cotton Combed 30s - Standard</option>
+        <option value="24s" data-tambah="20000">Cotton Combed 24s - Premium +Rp20.000</option>
+      </select>
+      <select class="ukuran" onchange="updateHarga(this)">
+        <option value="L" data-tambah="0">L - Standard</option>
+        <option value="XL" data-tambah="10000">XL +Rp10.000</option>
+        <option value="XXL" data-tambah="20000">XXL +Rp20.000</option>
+      </select>
+      <p class="harga">Rp 139.000</p>
+      <input type="number" class="qty" value="1" min="1">
+      <button class="btn" onclick="tambahKeranjang(this)">+ Tambah Keranjang</button>
+    </div>
+  </div>
+
+  <!-- PRODUK 2 - HARGA DASAR 159000 -->
+  <div class="card" data-nama="Kaos Graphic Vintage" data-harga="159000">
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        <img src="https://images.unsplash.com/photo-1618354691320-e5c1fe61ae8e?w=500" alt="Depan">
+        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500" alt="Belakang">
+        <img src="https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500" alt="Detail">
+      </div>
+      <button class="slider-btn prev" onclick="geserSlide(this,-1)">‹</button>
+      <button class="slider-btn next" onclick="geserSlide(this,1)">›</button>
+      <div class="dots"></div>
+    </div>
+    <div class="card-body">
+      <h3>Kaos Graphic Vintage</h3>
+      <p class="desc">Desain grafis vintage eksklusif. Material tebal 180gsm, warna nggak luntur.</p>
+      <select class="bahan" onchange="updateHarga(this)">
+        <option value="30s" data-tambah="0">Cotton Combed 30s - Standard</option>
+        <option value="24s" data-tambah="20000">Cotton Combed 24s - Premium +Rp20.000</option>
+      </select>
+      <select class="ukuran" onchange="updateHarga(this)">
+        <option value="M" data-tambah="0">M - Standard</option>
+        <option value="L" data-tambah="10000">L +Rp10.000</option>
+        <option value="XL" data-tambah="20000">XL +Rp20.000</option>
+      </select>
+      <p class="harga">Rp 159.000</p>
+      <input type="number" class="qty" value="1" min="1">
+      <button class="btn" onclick="tambahKeranjang(this)">+ Tambah Keranjang</button>
+    </div>
+  </div>
+
+  <!-- PRODUK 3 - HARGA DASAR 119000 -->
+  <div class="card" data-nama="Kaos Basic White" data-harga="119000">
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500" alt="Depan">
+        <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500" alt="Belakang">
+      </div>
+      <button class="slider-btn prev" onclick="geserSlide(this,-1)">‹</button>
+      <button class="slider-btn next" onclick="geserSlide(this,1)">›</button>
+      <div class="dots"></div>
+    </div>
+    <div class="card-body">
+      <h3>Kaos Basic White</h3>
+      <p class="desc">Warna putih bersih, bahan lembut breathable. Must-have item daily.</p>
+      <select class="bahan" onchange="updateHarga(this)">
+        <option value="30s" data-tambah="0">Cotton Combed 30s - Standard</option>
+        <option value="24s" data-tambah="20000">Cotton Combed 24s - Premium +Rp20.000</option>
+      </select>
+      <select class="ukuran" onchange="updateHarga(this)">
+        <option value="M" data-tambah="0">M - Standard</option>
+        <option value="L" data-tambah="10000">L +Rp10.000</option>
+        <option value="XL" data-tambah="20000">XL +Rp20.000</option>
+      </select>
+      <p class="harga">Rp 119.000</p>
+      <input type="number" class="qty" value="1" min="1">
+      <button class="btn" onclick="tambahKeranjang(this)">+ Tambah Keranjang</button>
+    </div>
+  </div>
+</section>
+
+<!-- Modal Checkout -->
+<div id="modalKeranjang" class="modal">
+  <div class="modal-box">
+    <span class="close" onclick="tutupKeranjang()">&times;</span>
+    <h2>Checkout Pesanan</h2>
+    <div class="no-faktur">No Faktur: <span id="noFaktur">INV-XXXX</span></div>
+    <div id="isiKeranjang"></div>
+    <div class="total">Total: Rp <span id="totalHarga">0</span></div>
+    <div class="form-group">
+      <label>Nama Lengkap *</label>
+      <input type="text" id="namaPembeli" placeholder="Contoh: Budi Santoso" required>
+    </div>
+    <div class="form-group">
+      <label>No WhatsApp Aktif *</label>
+      <input type="tel" id="noWA" placeholder="08xxxxxxxxxx" required>
+    </div>
+    <div class="form-group">
+      <label>Email Aktif</label>
+      <input type="email" id="email" placeholder="budi@email.com">
+    </div>
+    <div class="form-group">
+      <label>Alamat Lengkap *</label>
+      <textarea id="alamat" rows="3" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kota" required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Metode Pembayaran *</label>
+      <select id="metodeBayar">
+        <option value="Bank Transfer">Bank Transfer</option>
+        <option value="E-Wallet">E-Wallet</option>
+      </select>
+    </div>
+    <button class="btn btn-wa" onclick="checkoutWA()">Kirim Pesanan via WhatsApp</button>
+  </div>
+</div>
+
+<footer>
+  <h4>UrbanThread Official Store</h4>
+  <p>Kaos Premium Kualitas Distro | Pengiriman Seluruh Indonesia<br>
+  Instagram: @urbanthread.id | WhatsApp: 08xx-xxxx-xxxx<br>
+  © 2025 UrbanThread. Semua Hak Dilindungi.</p>
+</footer>
+
+<script>
+let keranjang = [];
+let noFakturSekarang = '';
+
+function updateHarga(el){
+  let card = el.closest('.card');
+  let hargaDasar = parseInt(card.dataset.harga);
+  let ukuran = card.querySelector('.ukuran');
+  let bahan = card.querySelector('.bahan');
+  let tambahUkuran = parseInt(ukuran.selectedOptions[0].dataset.tambah);
+  let tambahBahan = parseInt(bahan.selectedOptions[0].dataset.tambah);
+  let totalHarga = hargaDasar + tambahUkuran + tambahBahan;
+  card.querySelector('.harga').innerText = 'Rp ' + totalHarga.toLocaleString();
+}
+
+document.querySelectorAll('.slider-container').forEach(container=>{
+  let wrapper = container.querySelector('.slider-wrapper');
+  let imgs = wrapper.querySelectorAll('img');
+  let dotsDiv = container.querySelector('.dots');
+  imgs.forEach((_,i)=>{
+    let dot = document.createElement('span');
+    dot.classList.add('dot');
+    if(i===0) dot.classList.add('active');
+    dot.onclick = ()=>geserKeSlide(container,i);
+    dotsDiv.appendChild(dot);
+  });
+  container.dataset.slide = 0;
+});
+
+function geserSlide(btn, arah){
+  let container = btn.closest('.slider-container');
+  let wrapper = container.querySelector('.slider-wrapper');
+  let imgs = wrapper.querySelectorAll('img');
+  let dots = container.querySelectorAll('.dot');
+  let slide = parseInt(container.dataset.slide);
+  slide += arah;
+  if(slide < 0) slide = imgs.length - 1;
+  if(slide >= imgs.length) slide = 0;
+  container.dataset.slide = slide;
+  wrapper.style.transform = `translateX(-${slide * 100}%)`;
+  dots.forEach((d,i)=>d.classList.toggle('active', i===slide));
+}
+
+function geserKeSlide(container, index){
+  let wrapper = container.querySelector('.slider-wrapper');
+  let dots = container.querySelectorAll('.dot');
+  container.dataset.slide = index;
+  wrapper.style.transform = `translateX(-${index * 100}%)`;
+  dots.forEach((d,i)=>d.classList.toggle('active', i===index));
+}
+
+function generateFaktur(){
+  let now = new Date();
+  let tanggal = now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
+  let kode = Math.random().toString(36).substring(2,6).toUpperCase();
+  return `INV-${tanggal}-${kode}`;
+}
+
+function bukaKeranjang(){
+  noFakturSekarang = generateFaktur();
+  document.getElementById('noFaktur').innerText = noFakturSekarang;
+  updateKeranjang();
+  document.getElementById('modalKeranjang').style.display='block';
+}
+
+function tutupKeranjang(){document.getElementById('modalKeranjang').style.display='none'}
+
+function tambahKeranjang(btn){
+  let card = btn.closest('.card');
+  let nama = card.dataset.nama;
+  let hargaDasar = parseInt(card.dataset.harga);
+  let ukuran = card.querySelector('.ukuran');
+  let bahan = card.querySelector('.bahan');
+  let qty = parseInt(card.querySelector('.qty').value);
+  let tambahUkuran = parseInt(ukuran.selectedOptions[0].dataset.tambah);
+  let tambahBahan = parseInt(bahan.selectedOptions[0].dataset.tambah);
+  let hargaFinal = hargaDasar + tambahUkuran + tambahBahan;
+
+  keranjang.push({nama,harga:hargaFinal,ukuran:ukuran.value,bahan:bahan.selectedOptions[0].text,qty});
+  updateKeranjang();
+  btn.innerText = 'Ditambahkan!';
+  setTimeout(()=>btn.innerText='+ Tambah Keranjang',1200);
+}
+
+function hapusItem(index){
+  keranjang.splice(index,1);
+  updateKeranjang();
+}
+
+function updateKeranjang(){
+  document.getElementById('cartCount').innerText = keranjang.length;
+  let isi = document.getElementById('isiKeranjang');
+  let total = 0;
+  isi.innerHTML = '';
+  if(keranjang.length === 0){
+    isi.innerHTML = '<p style="text-align:center;color:#888;padding:20px">Keranjang masih kosong</p>';
+  }
+  keranjang.forEach((item,i)=>{
+    total += item.harga * item.qty;
+    isi.innerHTML += `
+      <div class="item-keranjang">
+        <div class="item-info">
+          ${item.nama}<br>
+          <small>Size: ${item.ukuran} | ${item.bahan}<br>Qty: ${item.qty} | Rp ${(item.harga*item.qty).toLocaleString()}</small>
+        </div>
+        <button class="btn-hapus" onclick="hapusItem(${i})">Hapus</button>
+      </div>
+    `;
+  });
+  document.getElementById('totalHarga').innerText = total.toLocaleString();
+}
+
+function checkoutWA(){
+  if(keranjang.length===0){alert('Keranjang kosong!');return}
+  let nama = document.getElementById('namaPembeli').value.trim();
+  let noWA = document.getElementById('noWA').value.trim();
+  let email = document.getElementById('email').value.trim();
+  let alamat = document.getElementById('alamat').value.trim();
+  let metode = document.getElementById('metodeBayar').value;
+  if(!nama ||!noWA ||!alamat){
+    alert('Mohon isi Nama, No WA, dan Alamat lengkap');
+    return;
+  }
+  let pesan = `*FAKTUR PEMESAN*%0A`;
+  pesan += `No Faktur: ${noFakturSekarang}%0A`;
+  pesan += `Tanggal: ${new Date().toLocaleDateString('id-ID')}%0A%0A`;
+  pesan += `*DETAIL ORDER*%0A`;
+  let total = 0;
+  keranjang.forEach(item=>{
+    pesan += `• ${item.nama} Size ${item.ukuran} | ${item.bahan} x${item.qty} = Rp ${(item.harga*item.qty).toLocaleString()}%0A`;
+    total += item.harga * item.qty;
+  });
+  pesan += `%0A*DATA PEMBELI*%0A`;
+  pesan += `Nama: ${nama}%0A`;
+  pesan += `No WA: ${noWA}%0A`;
+  pesan += `Email: ${email || '-'}%0A`;
+  pesan += `Alamat: ${alamat}%0A`;
+  pesan += `Metode Bayar: ${metode}%0A`;
+  pesan += `%0A*Total Bayar: Rp ${total.toLocaleString()}*%0A%0A`;
+  pesan += `Mohon info rekening/QRIS untuk pembayaran. Terima kasih`;
+  let noAdmin = '6281234567890'; // GANTI DENGAN NOMOR WA KAMU
+  window.open(`https://wa.me/${noAdmin}?text=${pesan}`,'_blank');
+  keranjang = [];
+  updateKeranjang();
+  tutupKeranjang();
+  alert('Pesanan terkirim! No Faktur kamu: ' + noFakturSekarang);
+}
+</script>
+</body>
+</html>
