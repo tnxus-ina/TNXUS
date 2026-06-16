@@ -373,7 +373,7 @@ function checkoutWA(){
   const address = document.getElementById('custAddress').value.trim();
   if(!name ||!phone ||!address){alert('Lengkapi data dulu');return}
 
-  let msg = `*ORDER BARU - URBANTHREAD*%0A`;
+  let msg = `*ORDER BARU - TNXUS*%0A`;
   msg += `No Faktur: ${document.getElementById('invoiceNo').innerText}%0A%0A`;
   msg += `*DETAIL PRODUK*%0A`;
   let total = 0;
@@ -383,6 +383,7 @@ function checkoutWA(){
   });
   msg += `%0A*DATA PEMBELI*%0A Nama: ${name}%0A No HP: ${phone}%0A Alamat: ${address}%0A`;
   msg += `%0A*TOTAL: Rp ${total.toLocaleString()}*`;
+  msg = `Terimakasih sudah order, Mohon tunggu konfirmasi dari admin untuk informasi selanjutnya%0A`;
 
   window.open(`https://wa.me/${NO_WA_ADMIN}?text=${msg}`, '_blank');
   cart = [];
