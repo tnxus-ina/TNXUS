@@ -18,7 +18,6 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:var(--bg);color:var(--text);overflow-x:hidden}
-a{text-decoration:none;color:inherit}
 
 .top-bar{background:linear-gradient(90deg,var(--accent2),var(--accent));text-align:center;padding:10px;font-size:13px;font-weight:600}
 header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
@@ -92,6 +91,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.8);backdrop-
 
 footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top:100px}
 .footer-wrap{max-width:1300px;margin:auto;padding:60px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px}
+.footer-col h4{font-size:16px;margin-bottom:14px}
+.footer-col p,.footer-col a{color:var(--text-dim);font-size:14px;line-height:1.8;display:block;margin-bottom:8px;transition:.2s}
+.footer-col a:hover{color:var(--accent)}
 .copy{text-align:center;padding:20px;border-top:1px solid rgba(255,255,255,0.06);color:var(--text-dim);font-size:13px}
 
 /* READY STOCK DEFAULT HIDDEN */
@@ -111,7 +113,6 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
     <div class="logo">UrbanThread</div>
     <div class="nav-right">
       <button class="btn-nav" onclick="togglePreorder()">Pre-Order</button>
-      <!-- Tombol Ready Stock muncul otomatis via JS -->
       <span id="readyBtnWrap"></span>
       <button class="cart-btn btn-nav" onclick="openCart()">Keranjang <span class="cart-count" id="cartCount">0</span></button>
     </div>
@@ -142,9 +143,8 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   </div>
 
   <div class="grid">
-    <!-- PRODUK 1 -->
     <div class="card" data-nama="Kaos Oversize Urban Black" data-harga="149000">
-     
+      <span class="badge">PRE-ORDER</span>
       <div class="img-wrap">
         <div class="slider" data-slider="urban">
           <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600" class="active">
@@ -174,7 +174,6 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   </div>
 </section>
 
-<!-- READY STOCK - HIDDEN DEFAULT -->
 <section class="section" id="nonPreorder">
   <h2 class="section-title">Ready Stock</h2>
   <p class="section-desc">Kirim hari yang sama untuk order sebelum jam 15:00</p>
@@ -216,6 +215,36 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   </div>
 </div>
 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-col">
+      <h4>UrbanThread</h4>
+      <p>Brand kaos premium lokal untuk anak muda Indonesia. Kualitas distro, harga bersahabat.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Sosial Media</h4>
+      <a href="https://instagram.com" target="_blank">Instagram @urbanthread.id</a>
+      <a href="https://tiktok.com" target="_blank">TikTok @urbanthread</a>
+      <a href="https://shopee.co.id" target="_blank">Shopee Mall</a>
+    </div>
+    <div class="footer-col">
+      <h4>Komunitas</h4>
+      <a href="#">UrbanThread Community</a>
+      <a href="#">Join Reseller</a>
+      <a href="#">Brand Ambassador</a>
+    </div>
+    <div class="footer-col">
+      <h4>Informasi Penting</h4>
+      <a href="#">Cara Order</a>
+      <a href="#">Kebijakan Retur</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kontak Admin</a>
+    </div>
+  </div>
+  <div class="copy">© 2026 UrbanThread. All Rights Reserved. Made with ❤️ in Indonesia</div>
+</footer>
+
 <script>
 // ========== SETTING UTAMA ==========
 const SHOW_READY_STOCK = false; // GANTI TRUE KALAU MAU MUNCULIN READY STOCK
@@ -226,7 +255,6 @@ const DEADLINE_PREORDER = '2026-05-20T23:59:59';
 let cart = [];
 let sliders = {};
 
-// INIT SLIDER
 function initSliders(){
   document.querySelectorAll('.slider').forEach(slider => {
     const id = slider.dataset.slider;
@@ -259,7 +287,6 @@ function updateSlide(id){
   [...dots].forEach((d,i)=>d.classList.toggle('active', i===sliders[id].current));
 }
 
-// PILIH UKURAN
 document.addEventListener('click', e=>{
   if(e.target.classList.contains('size-opt')){
     const wrap = e.target.closest('.size-options');
@@ -289,7 +316,6 @@ function togglePreorder(){
   document.getElementById('preorder').scrollIntoView({behavior:'smooth'});
 }
 
-// CART
 function addToCart(btn){
   const card = btn.closest('.card');
   const nama = card.dataset.nama;
@@ -364,7 +390,6 @@ function checkoutWA(){
   closeCart();
 }
 
-// Timer
 function updateTimer(){
   const deadline = new Date(DEADLINE_PREORDER).getTime();
   const now = new Date().getTime();
