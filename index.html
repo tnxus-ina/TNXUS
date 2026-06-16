@@ -413,6 +413,8 @@ function addToCart(btn){
     existing.qty += 1;
   } else {
     cart.push({nama, harga, qty: 1, size});
+    alert(`${urban} - Ukuran ${size} ditambah ke keranjang`);
+    console.log(cart);
   }
   
   updateCart();
