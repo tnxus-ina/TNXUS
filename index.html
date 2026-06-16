@@ -152,6 +152,25 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   cursor: pointer;
 }
 .dot.active { background: white; }
+
+  .size-select { margin: 15px 0; }
+.size-select label { display: block; margin-bottom: 8px; font-size: 14px; color: #ccc; }
+.sizes { display: flex; gap: 8px; flex-wrap: wrap; }
+.sizes input[type="radio"] { display: none; }
+.sizes label {
+  padding: 8px 14px;
+  border: 2px solid #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+.sizes input:checked + label {
+  border-color: #ff6b35;
+  background: #ff6b35;
+  color: white;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -206,6 +225,26 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
       <button class="prev" onclick="slide(this,-1)">‹</button>
       <button class="next" onclick="slide(this,1)">›</button>
       <div class="dots"></div>
+    </div>
+  </div>
+     <!-- PILIHAN UKURAN BARU -->
+  <div class="size-select">
+    <label>Pilih Ukuran:</label>
+    <div class="sizes">
+      <input type="radio" name="size-urban" id="s-urban" value="S">
+      <label for="s-urban">S</label>
+      
+      <input type="radio" name="size-urban" id="m-urban" value="M" checked>
+      <label for="m-urban">M</label>
+      
+      <input type="radio" name="size-urban" id="l-urban" value="L">
+      <label for="l-urban">L</label>
+      
+      <input type="radio" name="size-urban" id="xl-urban" value="XL">
+      <label for="xl-urban">XL</label>
+      
+      <input type="radio" name="size-urban" id="xxl-urban" value="XXL">
+      <label for="xxl-urban">XXL</label>
     </div>
   </div>
       <div class="card-body">
@@ -368,12 +407,13 @@ function addToCart(btn){
   const card = btn.closest('.card');
   const nama = card.dataset.nama;
   const harga = parseInt(card.dataset.harga);
+  const size = card.queryselector('input[type="radio"]:checked').value;
   
   const existing = cart.find(item => item.nama === nama);
   if(existing){
     existing.qty += 1;
   } else {
-    cart.push({nama, harga, qty: 1});
+    cart.push({nama, harga, size, qty: 1});
   }
   
   updateCart();
