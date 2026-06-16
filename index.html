@@ -100,6 +100,58 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   .timer-item{min-width:60px;padding:10px}
   .timer-item .num{font-size:22px}
   .modal-box{margin:20px;padding:20px}
+
+  .slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.slider img.active {
+  display: block;
+}
+.prev,.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 2;
+}
+.prev { left: 10px; }
+.next { right: 10px; }
+.dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dot.active { background: white; }
 </style>
 </head>
 <body>
@@ -146,9 +198,11 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   <div class="grid">
     <!-- PRODUK PRE-ORDER 1 -->
     <div class="card" data-nama="Kaos Oversize Urban Black" data-harga="149000" data-type="preorder">
-      <span class="badge preorder">PRE-ORDER</span>
       <div class="img-wrap">
-        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600" loading="lazy" alt="Urban Black">
+        <div class="slider">
+        <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500&auto=format&fit=crop" alt="Kaos Urban Black 1">
+        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&auto=format&fit=crop" alt="Kaos Urban Black 2">
+        <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=500&auto=format&fit=crop" alt="Kaos Urban Black 3">
       </div>
       <div class="card-body">
         <h3>Kaos Oversize Urban Black</h3>
@@ -351,6 +405,43 @@ function addToCart(btn){
   setTimeout(()=>btn.innerText='+ Tambah Keranjang', 1200);
 }
 
+  function initSliders() {
+  document.querySelectorAll('.slider').forEach(slider => {
+    const imgs = slider.querySelectorAll('img:not(.prev):not(.next)');
+    const dotsBox = slider.querySelector('.dots');
+    imgs[0].classList.add('active');
+
+    imgs.forEach((img, i) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if(i === 0) dot.classList.add('active');
+      dot.onclick = () => showSlide(slider, i);
+      dotsBox.appendChild(dot);
+    });
+  });
+}
+
+function showSlide(slider, index) {
+  const imgs = slider.querySelectorAll('img:not(.prev):not(.next)');
+  const dots = slider.querySelectorAll('.dot');
+  imgs.forEach(img => img.classList.remove('active'));
+  dots.forEach(dot => dot.classList.remove('active'));
+  imgs[index].classList.add('active');
+  dots[index].classList.add('active');
+  slider.dataset.current = index;
+}
+
+function slide(btn, dir) {
+  const slider = btn.parentElement;
+  const imgs = slider.querySelectorAll('img:not(.prev):not(.next)');
+  let current = parseInt(slider.dataset.current || 0);
+  current = (current + dir + imgs.length) % imgs.length;
+  showSlide(slider, current);
+}
+
+// panggil pas load
+document.addEventListener('DOMContentLoaded', initSliders);
+  
 function removeItem(index){
   cart.splice(index, 1);
   updateCart();
