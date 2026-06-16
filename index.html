@@ -408,26 +408,16 @@ function addToCart(btn){
   const harga = parseInt(card.dataset.harga);
   const size = card.queryselector('input[type="radio"]:checked').value;
   
-  const existing = cart.find(item => item.nama === nama);
+  const existing = cart.find(item => item.nama === nama && item.size === size);
   if(existing){
-    existing.qty += 1;
+    existing.qty++;
   } else {
-    cart.push({nama, harga, qty: 1, size});
-    alert(`${S-urban} - Ukuran ${S} ditambah ke keranjang`);
-    console.log(cart);
-    alert(`${L-urban} - Ukuran ${L} ditambah ke keranjang`);
-    console.log(cart);
-    alert(`${X-urban} - Ukuran ${X} ditambah ke keranjang`);
-    console.log(cart);
-    alert(`${XL-urban} - Ukuran ${XL} ditambah ke keranjang`);
-    console.log(cart);
-    alert(`${XXL-urban} - Ukuran ${XXL} ditambah ke keranjang`);
-    console.log(cart);
+    cart.push({nama, harga, size, qty: 1});
   }
   
   updateCart();
-  btn.innerText = 'Ditambahkan ✓';
-  setTimeout(()=>btn.innerText='+ Tambah Keranjang', 1200);
+  renderCart();
+  opencart();
 }
 
 function removeItem(index){
