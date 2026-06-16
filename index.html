@@ -20,7 +20,7 @@
 body{background:var(--bg);color:var(--text);overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 
-.top-bar{background:linear-gradient(90deg,var(--accent2),var(--accent));text-align:center;padding:10px;font-size:13px;font-weight:600;letter-spacing:0.5px}
+.top-bar{background:linear-gradient(90deg,var(--accent2),var(--accent));text-align:center;padding:10px;font-size:13px;font-weight:600}
 header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
 .nav{max-width:1300px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:24px;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -33,8 +33,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.8);backdrop-
 .hero{max-width:1300px;margin:60px auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 .hero h1{font-size:52px;line-height:1.1;font-weight:800;margin-bottom:16px}
 .hero p{color:var(--text-dim);font-size:18px;line-height:1.7;margin-bottom:24px}
-.btn-primary{padding:14px 28px;border-radius:12px;background:linear-gradient(90deg,var(--accent2),var(--accent));border:none;color:#fff;font-weight:600;cursor:pointer;font-size:16px;transition:.3s}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,212,255,0.3)}
+.btn-primary{padding:14px 28px;border-radius:12px;background:linear-gradient(90deg,var(--accent2),var(--accent));border:none;color:#fff;font-weight:600;cursor:pointer;font-size:16px}
 .hero-img{border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
 
 .section{max-width:1300px;margin:80px auto;padding:0 24px}
@@ -42,64 +41,65 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.8);backdrop-
 .section-desc{color:var(--text-dim);margin-bottom:32px}
 
 .timer-box{background:linear-gradient(135deg,rgba(255,0,255,0.1),rgba(0,212,255,0.1));border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:20px;margin-bottom:32px;text-align:center}
-.timer-box h3{font-size:18px;margin-bottom:12px}
-.timer{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.timer{display:flex;gap:12px;justify-content:center}
 .timer-item{background:rgba(0,0,0,0.4);padding:12px 16px;border-radius:10px;min-width:70px}
-.timer-item .num{font-size:28px;font-weight:700;color:var(--accent)}
-.timer-item .label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px}
+.timer-item.num{font-size:28px;font-weight:700;color:var(--accent)}
+.timer-item.label{font-size:11px;color:var(--text-dim);text-transform:uppercase}
 
 .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:24px }
 .card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:20px;overflow:hidden;transition:.3s;display:flex;flex-direction:column}
 .card:hover{border-color:rgba(0,212,255,0.4);transform:translateY(-6px)}
 .badge{position:absolute;top:12px;left:12px;background:var(--accent2);padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;z-index:2}
-.badge.preorder{background:linear-gradient(90deg,#f59e0b,#ef4444)}
 .img-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;background:#000}
-.img-wrap img{width:100%;height:100%;object-fit:cover;transition:.4s}
-.card:hover .img-wrap img{transform:scale(1.05)}
+
+/* SLIDER */
+.slider{position:relative;width:100%;height:100%}
+.slider img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;opacity:0;transition:opacity 0.4s}
+.slider img.active{opacity:1}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;z-index:3}
+.slider-btn.prev{left:8px}
+.slider-btn.next{right:8px}
+.slider-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:3}
+.slider-dots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer}
+.slider-dots span.active{background:var(--accent)}
+
 .card-body{padding:18px;flex-grow:1;display:flex;flex-direction:column}
 .card-body h3{font-size:18px;font-weight:600;margin-bottom:6px}
 .price{font-size:22px;font-weight:700;color:var(--accent);margin:8px 0}
 .price del{font-size:14px;color:var(--text-dim);margin-left:8px}
-.btn-add{margin-top:auto;padding:12px;border-radius:10px;background:linear-gradient(90deg,var(--accent2),var(--accent));border:none;color:#fff;font-weight:600;cursor:pointer;transition:.2s}
+
+/* UKURAN */
+.size-wrap{margin:12px 0}
+.size-label{font-size:13px;color:var(--text-dim);margin-bottom:6px}
+.size-options{display:flex;gap:6px;flex-wrap:wrap}
+.size-opt{padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;font-size:13px;cursor:pointer;transition:.2s}
+.size-opt.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600}
+
+.btn-add{margin-top:auto;padding:12px;border-radius:10px;background:linear-gradient(90deg,var(--accent2),var(--accent));border:none;color:#fff;font-weight:600;cursor:pointer}
 .btn-add:disabled{background:#333;cursor:not-allowed;opacity:0.5}
-.btn-add:hover:not(:disabled){box-shadow:0 6px 20px rgba(0,212,255,0.3)}
 
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:200;overflow-y:auto}
 .modal-box{max-width:520px;margin:60px auto;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:28px}
-.modal-box h2{margin-bottom:16px;font-size:24px}
 .no-faktur{background:rgba(0,212,255,0.1);border:1px dashed var(--accent);padding:12px;border-radius:12px;text-align:center;margin-bottom:20px;font-weight:600;color:var(--accent)}
-.item-cart{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
-.item-cart:last-child{border-bottom:none}
+.item-cart{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px}
 .btn-del{background:var(--danger);border:none;color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:12px}
 .total{font-size:22px;font-weight:700;text-align:right;margin:20px 0;color:var(--accent)}
 .form-group{margin-bottom:14px}
 .form-group label{display:block;font-size:13px;color:var(--text-dim);margin-bottom:6px}
-.form-group input,.form-group textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3);color:var(--text);font-size:14px}
-.form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--accent)}
+.form-group input,.form-group textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3);color:var(--text)}
 .btn-wa{width:100%;padding:14px;border-radius:12px;background:linear-gradient(90deg,#22c55e,#16a34a);border:none;color:#fff;font-weight:600;cursor:pointer;font-size:16px}
 .close{float:right;cursor:pointer;font-size:26px;color:var(--text-dim)}
 
 footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top:100px}
 .footer-wrap{max-width:1300px;margin:auto;padding:60px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px}
-.footer-col h4{font-size:16px;margin-bottom:14px}
-.footer-col p,.footer-col a{color:var(--text-dim);font-size:14px;line-height:1.8;display:block;margin-bottom:8px;transition:.2s}
-.footer-col a:hover{color:var(--accent)}
 .copy{text-align:center;padding:20px;border-top:1px solid rgba(255,255,255,0.06);color:var(--text-dim);font-size:13px}
 
-/* Non pre-order disembunyikan default */
+/* READY STOCK DEFAULT HIDDEN */
 #nonPreorder{display:none}
 
-/* Responsive */
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;text-align:center}
-  .hero h1{font-size:36px}
-  .nav{padding:14px 16px}
-  .section{margin:60px auto;padding:0 16px}
-@media(max-width:600px){
-  .grid{grid-template-columns:1fr}
-  .timer-item{min-width:60px;padding:10px}
-  .timer-item .num{font-size:22px}
-  .modal-box{margin:20px;padding:20px}
+.hero{grid-template-columns:1fr;text-align:center}
+.hero h1{font-size:36px}
 </style>
 </head>
 <body>
@@ -111,7 +111,8 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
     <div class="logo">UrbanThread</div>
     <div class="nav-right">
       <button class="btn-nav" onclick="togglePreorder()">Pre-Order</button>
-      <button class="btn-nav" onclick="toggleReady()">Ready Stock</button>
+      <!-- Tombol Ready Stock muncul otomatis via JS -->
+      <span id="readyBtnWrap"></span>
       <button class="cart-btn btn-nav" onclick="openCart()">Keranjang <span class="cart-count" id="cartCount">0</span></button>
     </div>
   </div>
@@ -120,18 +121,16 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
 <section class="hero">
   <div>
     <h1>Kaos Premium<br>Untuk Anak Muda</h1>
-    <p>Bahan cotton combed 30s terbaik, sablon DTG anti crack, cutting modern. Didesain eksklusif, produksi terbatas. Tampil beda, rasa nyaman.</p>
+    <p>Bahan cotton combed 30s terbaik, sablon DTG anti crack, cutting modern.</p>
     <button class="btn-primary" onclick="document.getElementById('preorder').scrollIntoView({behavior:'smooth'})">Lihat Koleksi</button>
   </div>
   <div class="hero-img">
-    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800" alt="Kaos Premium" style="width:100%;height:100%;object-fit:cover">
+    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800" style="width:100%;height:100%;object-fit:cover">
   </div>
 </section>
 
 <section class="section" id="preorder">
   <h2 class="section-title">Pre-Order Limited Edition</h2>
-  <p class="section-desc">Produksi terbatas, estimasi pengiriman 14-21 hari kerja. Harga lebih hemat!</p>
-  
   <div class="timer-box" id="timerBox">
     <h3>Pre-Order Ditutup Dalam:</h3>
     <div class="timer" id="timer">
@@ -140,68 +139,62 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
       <div class="timer-item"><div class="num" id="minutes">00</div><div class="label">Menit</div></div>
       <div class="timer-item"><div class="num" id="seconds">00</div><div class="label">Detik</div></div>
     </div>
-    <p id="timerText" style="margin-top:12px;font-size:13px;color:var(--text-dim)"></p>
   </div>
 
   <div class="grid">
-    <!-- PRODUK PRE-ORDER 1 -->
-    <div class="card" data-nama="Kaos Oversize Urban Black" data-harga="149000" data-type="preorder">
-      <span class="badge preorder">PRE-ORDER</span>
+    <!-- PRODUK 1 -->
+    <div class="card" data-nama="Kaos Oversize Urban Black" data-harga="149000">
+     
       <div class="img-wrap">
-        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600" loading="lazy" alt="Urban Black">
+        <div class="slider" data-slider="urban">
+          <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600" class="active">
+          <img src="https://images.unsplash.com/photo-1618354691320-e5c1fe61ae8e?w=600">
+          <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600">
+          <button class="slider-btn prev" onclick="slide('urban',-1)">‹</button>
+          <button class="slider-btn next" onclick="slide('urban',1)">›</button>
+          <div class="slider-dots" id="dots-urban"></div>
+        </div>
       </div>
       <div class="card-body">
         <h3>Kaos Oversize Urban Black</h3>
-        <p style="color:var(--text-dim);font-size:13px;margin-bottom:8px">Cotton Combed 30s | Sablon DTG</p>
         <div class="price">Rp 149.000 <del>Rp 199.000</del></div>
-        <button class="btn-add" onclick="addToCart(this)">+ Tambah Keranjang</button>
-      </div>
-    </div>
-
-    <!-- PRODUK PRE-ORDER 2 -->
-    <div class="card" data-nama="Kaos Graphic Vintage Retro" data-harga="169000" data-type="preorder">
-      <span class="badge preorder">PRE-ORDER</span>
-      <div class="img-wrap">
-        <img src="https://images.unsplash.com/photo-1618354691320-e5c1fe61ae8e?w=600" loading="lazy" alt="Vintage Retro">
-      </div>
-      <div class="card-body">
-        <h3>Kaos Graphic Vintage Retro</h3>
-        <p style="color:var(--text-dim);font-size:13px;margin-bottom:8px">Cotton 24s Premium | Limited Print</p>
-        <div class="price">Rp 169.000 <del>Rp 229.000</del></div>
-        <button class="btn-add" onclick="addToCart(this)">+ Tambah Keranjang</button>
-      </div>
-    </div>
-
-    <!-- PRODUK PRE-ORDER 3 -->
-    <div class="card" data-nama="Kaos Minimalist White" data-harga="129000" data-type="preorder">
-      <span class="badge preorder">PRE-ORDER</span>
-      <div class="img-wrap">
-        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" loading="lazy" alt="Minimalist White">
-      </div>
-      <div class="card-body">
-        <h3>Kaos Minimalist White</h3>
-        <p style="color:var(--text-dim);font-size:13px;margin-bottom:8px">Breathable | Must Have Basic</p>
-        <div class="price">Rp 129.000 <del>Rp 179.000</del></div>
+        <div class="size-wrap">
+          <div class="size-label">Pilih Ukuran:</div>
+          <div class="size-options" data-size="urban">
+            <div class="size-opt active" data-size="S">S</div>
+            <div class="size-opt" data-size="M">M</div>
+            <div class="size-opt" data-size="L">L</div>
+            <div class="size-opt" data-size="XL">XL</div>
+            <div class="size-opt" data-size="XXL">XXL</div>
+          </div>
+        </div>
         <button class="btn-add" onclick="addToCart(this)">+ Tambah Keranjang</button>
       </div>
     </div>
   </div>
 </section>
 
+<!-- READY STOCK - HIDDEN DEFAULT -->
 <section class="section" id="nonPreorder">
   <h2 class="section-title">Ready Stock</h2>
   <p class="section-desc">Kirim hari yang sama untuk order sebelum jam 15:00</p>
   <div class="grid">
-    <!-- PRODUK READY STOCK - disembunyikan default -->
-    <div class="card" data-nama="Kaos Basic Navy Ready" data-harga="119000" data-type="ready">
+    <div class="card" data-nama="Kaos Basic Navy Ready" data-harga="119000">
       <span class="badge" style="background:var(--success)">READY</span>
       <div class="img-wrap">
-        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600" loading="lazy" alt="Basic Navy">
+        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600">
       </div>
       <div class="card-body">
         <h3>Kaos Basic Navy Ready</h3>
-        <p style="color:var(--text-dim);font-size:13px;margin-bottom:8px">Cotton 30s | Stok Terbatas</p>
         <div class="price">Rp 119.000</div>
+        <div class="size-wrap">
+          <div class="size-label">Pilih Ukuran:</div>
+          <div class="size-options" data-size="navy">
+            <div class="size-opt active" data-size="M">M</div>
+            <div class="size-opt" data-size="L">L</div>
+            <div class="size-opt" data-size="XL">XL</div>
+          </div>
+        </div>
         <button class="btn-add" onclick="addToCart(this)">+ Tambah Keranjang</button>
       </div>
     </div>
@@ -216,143 +209,105 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
     <div class="no-faktur">No Faktur: <span id="invoiceNo">INV-XXXX</span></div>
     <div id="cartItems"></div>
     <div class="total">Total: Rp <span id="totalPrice">0</span></div>
-    
-    <div class="form-group">
-      <label>Nama Lengkap *</label>
-      <input type="text" id="custName" placeholder="Budi Santoso" required>
-    </div>
-    <div class="form-group">
-      <label>No HP / WhatsApp *</label>
-      <input type="tel" id="custPhone" placeholder="0812xxxxxxxx" required>
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="custEmail" placeholder="budi@email.com">
-    </div>
-    <div class="form-group">
-      <label>Alamat Pengiriman Lengkap *</label>
-      <textarea id="custAddress" rows="3" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kota, Kode Pos" required></textarea>
-    </div>
-    <div class="form-group">
-      <label>Catatan Opsional</label>
-      <textarea id="custNote" rows="2" placeholder="Contoh: Titip ke satpam, warna diganti jika habis"></textarea>
-    </div>
-    
+    <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="custName"></div>
+    <div class="form-group"><label>No HP *</label><input type="tel" id="custPhone"></div>
+    <div class="form-group"><label>Alamat *</label><textarea id="custAddress" rows="3"></textarea></div>
     <button class="btn-wa" onclick="checkoutWA()">Kirim Pesanan via WhatsApp</button>
-    <p style="font-size:12px;color:var(--text-dim);margin-top:10px;text-align:center">*Info ongkir & metode pembayaran akan dikirim via WA admin</p>
   </div>
 </div>
 
-<footer>
-  <div class="footer-wrap">
-    <div class="footer-col">
-      <h4>UrbanThread</h4>
-      <p>Brand kaos premium lokal untuk anak muda Indonesia. Kualitas distro, harga bersahabat.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Sosial Media</h4>
-      <a href="https://instagram.com" target="_blank">Instagram @urbanthread.id</a>
-      <a href="https://tiktok.com" target="_blank">TikTok @urbanthread</a>
-      <a href="https://shopee.co.id" target="_blank">Shopee Mall</a>
-    </div>
-    <div class="footer-col">
-      <h4>Komunitas</h4>
-      <a href="#">UrbanThread Community</a>
-      <a href="#">Join Reseller</a>
-      <a href="#">Brand Ambassador</a>
-    </div>
-    <div class="footer-col">
-      <h4>Informasi Penting</h4>
-      <a href="#">Cara Order</a>
-      <a href="#">Kebijakan Retur</a>
-      <a href="#">FAQ</a>
-      <a href="#">Kontak Admin</a>
-    </div>
-  </div>
-  <div class="copy">© 2026 UrbanThread. All Rights Reserved. Made with ❤️ in Indonesia</div>
-</footer>
-
 <script>
-// ========== SETTING DI SINI ==========
-const NO_WA_ADMIN = '6281234567890'; // GANTI NOMOR WA KAMU
-const DEADLINE_PREORDER = '2026-05-20T23:59:59'; // GANTI TANGGAL DEADLINE
+// ========== SETTING UTAMA ==========
+const SHOW_READY_STOCK = false; // GANTI TRUE KALAU MAU MUNCULIN READY STOCK
+const NO_WA_ADMIN = '6281234567890';
+const DEADLINE_PREORDER = '2026-05-20T23:59:59';
 // =====================================
 
 let cart = [];
-let invoiceNow = '';
-let preorderActive = true;
+let sliders = {};
 
-// Timer Countdown
-function updateTimer(){
-  const deadline = new Date(DEADLINE_PREORDER).getTime();
-  const now = new Date().getTime();
-  const distance = deadline - now;
-
-  if(distance < 0){
-    preorderActive = false;
-    document.getElementById('timerBox').innerHTML = '<h3 style="color:var(--danger)">⏰ PRE-ORDER DITUTUP</h3><p>Pre-order sudah berakhir. Silakan cek koleksi Ready Stock.</p>';
-    document.querySelectorAll('[data-type="preorder"] .btn-add').forEach(btn=>{
-      btn.disabled = true;
-      btn.innerText = 'Pre-Order Ditutup';
+// INIT SLIDER
+function initSliders(){
+  document.querySelectorAll('.slider').forEach(slider => {
+    const id = slider.dataset.slider;
+    const imgs = slider.querySelectorAll('img');
+    const dotsWrap = document.getElementById('dots-'+id);
+    sliders[id] = {current:0, total:imgs.length};
+    imgs.forEach((img,i)=>{
+      const dot = document.createElement('span');
+      if(i===0) dot.classList.add('active');
+      dot.onclick = ()=>goSlide(id,i);
+      dotsWrap.appendChild(dot);
     });
-    return;
-  }
-
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  document.getElementById('days').innerText = String(days).padStart(2,'0');
-  document.getElementById('hours').innerText = String(hours).padStart(2,'0');
-  document.getElementById('minutes').innerText = String(minutes).padStart(2,'0');
-  document.getElementById('seconds').innerText = String(seconds).padStart(2,'0');
-  document.getElementById('timerText').innerText = `Estimasi pengiriman: 14-21 hari kerja setelah ${new Date(DEADLINE_PREORDER).toLocaleDateString('id-ID')}`;
+  });
 }
-setInterval(updateTimer, 1000);
-updateTimer();
 
-// Toggle section
+function slide(id,dir){
+  const s = sliders[id];
+  s.current = (s.current + dir + s.total) % s.total;
+  updateSlide(id);
+}
+function goSlide(id,index){
+  sliders[id].current = index;
+  updateSlide(id);
+}
+function updateSlide(id){
+  const slider = document.querySelector(`[data-slider="${id}"]`);
+  const imgs = slider.querySelectorAll('img');
+  const dots = document.getElementById('dots-'+id).children;
+  imgs.forEach((img,i)=>img.classList.toggle('active', i===sliders[id].current));
+  [...dots].forEach((d,i)=>d.classList.toggle('active', i===sliders[id].current));
+}
+
+// PILIH UKURAN
+document.addEventListener('click', e=>{
+  if(e.target.classList.contains('size-opt')){
+    const wrap = e.target.closest('.size-options');
+    wrap.querySelectorAll('.size-opt').forEach(o=>o.classList.remove('active'));
+    e.target.classList.add('active');
+  }
+});
+
+// TOGGLE READY STOCK + TOMBOL OTOMATIS
+document.addEventListener('DOMContentLoaded', () => {
+  const readySection = document.getElementById('nonPreorder');
+  const btnWrap = document.getElementById('readyBtnWrap');
+
+  if(SHOW_READY_STOCK){
+    readySection.style.display = 'grid';
+    btnWrap.innerHTML = '<button class="btn-nav" onclick="toggleReady()">Ready Stock</button>';
+  } else {
+    readySection.style.display = 'none';
+    btnWrap.innerHTML = '';
+  }
+});
+
+function toggleReady(){
+  document.getElementById('nonPreorder').scrollIntoView({behavior:'smooth'});
+}
 function togglePreorder(){
   document.getElementById('preorder').scrollIntoView({behavior:'smooth'});
 }
-function toggleReady(){
-  document.getElementById('nonPreorder').style.display = 'grid';
-  document.getElementById('nonPreorder').scrollIntoView({behavior:'smooth'});
-}
 
-// Generate No Faktur
-function generateInvoice(){
-  const now = new Date();
-  const date = now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
-  const code = Math.random().toString(36).substring(2,6).toUpperCase();
-  return `UT-${date}-${code}`;
-}
-
-// Cart Functions
+// CART
 function addToCart(btn){
-  if(!preorderActive && btn.closest('[data-type="preorder"]')){
-    alert('Pre-order sudah ditutup!');
-    return;
-  }
   const card = btn.closest('.card');
   const nama = card.dataset.nama;
   const harga = parseInt(card.dataset.harga);
-  
-  const existing = cart.find(item => item.nama === nama);
-  if(existing){
-    existing.qty += 1;
-  } else {
-    cart.push({nama, harga, qty: 1});
-  }
-  
+  const size = card.querySelector('.size-opt.active').dataset.size;
+  const key = nama+'-'+size;
+
+  const existing = cart.find(item => item.key === key);
+  if(existing){ existing.qty += 1; }
+  else { cart.push({key, nama, harga, size, qty: 1}); }
+
   updateCart();
   btn.innerText = 'Ditambahkan ✓';
   setTimeout(()=>btn.innerText='+ Tambah Keranjang', 1200);
 }
 
-function removeItem(index){
-  cart.splice(index, 1);
+function removeItem(key){
+  cart = cart.filter(item => item.key!== key);
   updateCart();
 }
 
@@ -361,20 +316,15 @@ function updateCart(){
   const wrap = document.getElementById('cartItems');
   let total = 0;
   wrap.innerHTML = '';
-  
   if(cart.length === 0){
     wrap.innerHTML = '<p style="text-align:center;color:var(--text-dim);padding:20px">Keranjang kosong</p>';
   }
-  
-  cart.forEach((item, i)=>{
+  cart.forEach(item=>{
     total += item.harga * item.qty;
     wrap.innerHTML += `
       <div class="item-cart">
-        <div>
-          <div style="font-weight:500">${item.nama}</div>
-          <div style="font-size:12px;color:var(--text-dim)">Qty: ${item.qty} x Rp ${item.harga.toLocaleString()}</div>
-        </div>
-        <button class="btn-del" onclick="removeItem(${i})">Hapus</button>
+        <div><div>${item.nama}</div><div style="font-size:12px;color:var(--text-dim)">Ukuran: ${item.size} x ${item.qty}</div></div>
+        <button class="btn-del" onclick="removeItem('${item.key}')">Hapus</button>
       </div>
     `;
   });
@@ -382,62 +332,65 @@ function updateCart(){
 }
 
 function openCart(){
-  invoiceNow = generateInvoice();
-  document.getElementById('invoiceNo').innerText = invoiceNow;
+  document.getElementById('invoiceNo').innerText = 'INV-'+Date.now().toString().slice(-6);
   updateCart();
   document.getElementById('modalCart').style.display = 'block';
 }
-
 function closeCart(){
   document.getElementById('modalCart').style.display = 'none';
 }
 
 function checkoutWA(){
   if(cart.length === 0){alert('Keranjang kosong!');return}
-  
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
-  const email = document.getElementById('custEmail').value.trim();
   const address = document.getElementById('custAddress').value.trim();
-  const note = document.getElementById('custNote').value.trim();
-  
-  if(!name || !phone || !address){
-    alert('Mohon lengkapi Nama, No HP, dan Alamat pengiriman');
-    return;
-  }
-  
+  if(!name ||!phone ||!address){alert('Lengkapi data dulu');return}
+
   let msg = `*ORDER BARU - URBANTHREAD*%0A`;
-  msg += `No Faktur: ${invoiceNow}%0A`;
-  msg += `Tanggal: ${new Date().toLocaleString('id-ID')}%0A%0A`;
+  msg += `No Faktur: ${document.getElementById('invoiceNo').innerText}%0A%0A`;
   msg += `*DETAIL PRODUK*%0A`;
   let total = 0;
   cart.forEach(item=>{
-    msg += `• ${item.nama} x${item.qty} = Rp ${(item.harga*item.qty).toLocaleString()}%0A`;
+    msg += `• ${item.nama} - Ukuran ${item.size} x${item.qty} = Rp ${(item.harga*item.qty).toLocaleString()}%0A`;
     total += item.harga * item.qty;
   });
-  msg += `%0A*DATA PEMBELI*%0A`;
-  msg += `Nama: ${name}%0A`;
-  msg += `No HP: ${phone}%0A`;
-  msg += `Email: ${email || '-'}%0A`;
-  msg += `Alamat: ${address}%0A`;
-  msg += `Catatan: ${note || '-'}%0A`;
-  msg += `%0A*TOTAL: Rp ${total.toLocaleString()}*%0A%0A`;
-  msg += `Mohon info ongkir ke alamat di atas + metode pembayaran. Terima kasih`;
-  
+  msg += `%0A*DATA PEMBELI*%0A Nama: ${name}%0A No HP: ${phone}%0A Alamat: ${address}%0A`;
+  msg += `%0A*TOTAL: Rp ${total.toLocaleString()}*`;
+
   window.open(`https://wa.me/${NO_WA_ADMIN}?text=${msg}`, '_blank');
-  
   cart = [];
   updateCart();
   closeCart();
-  alert(`Pesanan berhasil dikirim! No Faktur: ${invoiceNow}. Admin akan menghubungi via WA untuk info ongkir & pembayaran.`);
 }
 
-// Tutup modal klik luar
-window.onclick = function(e){
-  if(e.target == document.getElementById('modalCart')){
-    closeCart();
+// Timer
+function updateTimer(){
+  const deadline = new Date(DEADLINE_PREORDER).getTime();
+  const now = new Date().getTime();
+  const distance = deadline - now;
+  if(distance < 0){
+    document.getElementById('timerBox').innerHTML = '<h3 style="color:var(--danger)">⏰ PRE-ORDER DITUTUP</h3>';
+    document.querySelectorAll('.btn-add').forEach(btn=>{btn.disabled = true; btn.innerText = 'Pre-Order Ditutup';});
+    return;
   }
+  const days = Math.floor(distance / 86400000);
+  const hours = Math.floor((distance % 86400000) / 3600000);
+  const minutes = Math.floor((distance % 3600000) / 60000);
+  const seconds = Math.floor((distance % 60000) / 1000);
+  document.getElementById('days').innerText = String(days).padStart(2,'0');
+  document.getElementById('hours').innerText = String(hours).padStart(2,'0');
+  document.getElementById('minutes').innerText = String(minutes).padStart(2,'0');
+  document.getElementById('seconds').innerText = String(seconds).padStart(2,'0');
 }
+setInterval(updateTimer, 1000);
+updateTimer();
+
+window.onclick = function(e){
+  if(e.target == document.getElementById('modalCart')) closeCart();
+}
+
+initSliders();
 </script>
 </body>
 </html>
