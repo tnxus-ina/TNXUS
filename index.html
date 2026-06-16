@@ -412,7 +412,7 @@ function addToCart(btn){
   if(existing){
     existing.qty += 1;
   } else {
-    cart.push({nama, harga, size, qty: 1});
+    cart.push({nama, harga, qty: 1, size});
   }
   
   updateCart();
