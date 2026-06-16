@@ -371,7 +371,43 @@ function addToCart(btn){
   btn.innerText = 'Ditambahkan ✓';
   setTimeout(()=>btn.innerText='+ Tambah Keranjang', 1200);
 }
+function initSliders() {
+  document.querySelectorAll('.slider').forEach(slider => {
+    const imgs = slider.querySelectorAll('img:not(.prev):not(.next)');
+    const dotsBox = slider.querySelector('.dots');
+    imgs[0].classList.add('active');
 
+    imgs.forEach((img, i) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if(i === 0) dot.classList.add('active');
+      dot.onclick = () => showSlide(slider, i);
+      dotsBox.appendChild(dot);
+    });
+  });
+}
+
+function showSlide(slider, index) {
+  const imgs = slider.querySelectorAll('img:not(.prev):not(.next)');
+  const dots = slider.querySelectorAll('.dot');
+  imgs.forEach(img => img.classList.remove('active'));
+  dots.forEach(dot => dot.classList.remove('active'));
+  imgs[index].classList.add('active');
+  dots[index].classList.add('active');
+  slider.dataset.current = index;
+}
+
+function slide(btn, dir) {
+  const slider = btn.parentElement;
+  const imgs = slider.querySelectorAll('img:not(.prev):not(.next)');
+  let current = parseInt(slider.dataset.current || 0);
+  current = (current + dir + imgs.length) % imgs.length;
+  showSlide(slider, current);
+}
+
+// panggil pas load
+document.addEventListener('DOMContentLoaded', initSliders);
+  
 function removeItem(index){
   cart.splice(index, 1);
   updateCart();
