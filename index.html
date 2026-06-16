@@ -85,7 +85,23 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
 .footer-col p,.footer-col a{color:var(--text-dim);font-size:14px;line-height:1.8;display:block;margin-bottom:8px;transition:.2s}
 .footer-col a:hover{color:var(--accent)}
 .copy{text-align:center;padding:20px;border-top:1px solid rgba(255,255,255,0.06);color:var(--text-dim);font-size:13px}
-.slider {
+
+/* Non pre-order disembunyikan default */
+#nonPreorder{display:none}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .hero h1{font-size:36px}
+  .nav{padding:14px 16px}
+  .section{margin:60px auto;padding:0 16px}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .timer-item{min-width:60px;padding:10px}
+  .timer-item .num{font-size:22px}
+  .modal-box{margin:20px;padding:20px}
+
+  .slider {
   position: relative;
   width: 100%;
   height: 100%;
@@ -136,21 +152,6 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   cursor: pointer;
 }
 .dot.active { background: white; }
-  
-/* Non pre-order disembunyikan default */
-#nonPreorder{display:none}
-
-/* Responsive */
-@media(max-width:900px){
-  .hero{grid-template-columns:1fr;text-align:center}
-  .hero h1{font-size:36px}
-  .nav{padding:14px 16px}
-  .section{margin:60px auto;padding:0 16px}
-@media(max-width:600px){
-  .grid{grid-template-columns:1fr}
-  .timer-item{min-width:60px;padding:10px}
-  .timer-item .num{font-size:22px}
-  .modal-box{margin:20px;padding:20px}
 </style>
 </head>
 <body>
