@@ -383,7 +383,7 @@ function checkoutWA(){
   });
   msg += `%0A*DATA PEMBELI*%0A Nama: ${name}%0A No HP: ${phone}%0A Alamat: ${address}%0A`;
   msg += `%0A*TOTAL: Rp ${total.toLocaleString()}*`;
-  msg = `Terimakasih sudah order, Mohon tunggu konfirmasi dari admin untuk informasi selanjutnya%0A`;
+  msg += `Terimakasih sudah order, Mohon tunggu konfirmasi dari admin untuk informasi selanjutnya%0A`;
 
   window.open(`https://wa.me/${NO_WA_ADMIN}?text=${msg}`, '_blank');
   cart = [];
