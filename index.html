@@ -152,25 +152,21 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   cursor: pointer;
 }
 .dot.active { background: white; }
-
-  .size-select { margin: 15px 0; }
-.size-select label { display: block; margin-bottom: 8px; font-size: 14px; color: #ccc; }
-.sizes { display: flex; gap: 8px; flex-wrap: wrap; }
-.sizes input[type="radio"] { display: none; }
-.sizes label {
-  padding: 8px 14px;
-  border: 2px solid #333;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.2s;
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #333;
 }
-.sizes input:checked + label {
-  border-color: #ff6b35;
-  background: #ff6b35;
+.cart-item button {
+  background: #333;
+  border: none;
   color: white;
-  font-weight: bold;
-}
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+{
 </style>
 </head>
 <body>
@@ -419,10 +415,47 @@ function addToCart(btn){
   renderCart();
   opencart();
 }
+function renderCart() {
+  const cartItems = document.getElementById('cart-items');
+  const totalPrice = document.getElementById('total-price');
 
-function removeItem(index){
+  if(cart.length === 0) {
+    cartItems.innerHTML = '<p style="text-align:center;color:#666;">Keranjang kosong</p>';
+    totalPrice.innerText = 'Rp0';
+    return;
+  }
+
+  cartItems.innerHTML = cart.map((item, index) => `
+    <div class="cart-item">
+      <div>
+        <h4>${item.nama}</h4>
+        <p style="font-size:13px;color:#aaa;">Ukuran: ${item.size} | Rp${item.harga.toLocaleString('id-ID')}</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button onclick="changeQty(${index},-1)">-</button>
+        <span>${item.qty}</span>
+        <button onclick="changeQty(${index},1)">+</button>
+        <button onclick="removeItem(${index})" style="color:red;">x</button>
+      </div>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((sum, item) => sum + item.harga * item.qty, 0);
+  totalPrice.innerText = 'Rp' + total.toLocaleString('id-ID');
+}
+  
+function changeQty(index, delta) {
+  cart[index].qty += delta;
+  if(cart[index].qty <= 0) cart.splice(index, 1);
+  renderCart();
+  updateCartCount();
+}
+
+function removeItem(index) {
   cart.splice(index, 1);
-  updateCart();
+  renderCart();
+  updateCartCount();
+}
 }
 
 function updateCart(){
