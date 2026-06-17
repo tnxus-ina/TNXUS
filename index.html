@@ -226,19 +226,15 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
       <h4>Sosial Media</h4>
       <a href="https://www.instagram.com/tnxus.ina?igsh=bHllZDgyYWRnaXc4" target="blank">Instagram @tnxus.ina</a>
       <a href="https://www.tiktok.com/@tnxus1indo?_r=1&_t=ZS-97DuMbgGV2Q" target="blank">TikTok @tnxus1indo</a>
-      <a href="https://shopee.co.id" target="blank">Shopee Mall</a>
+      
     </div>
     <div class="footer-col">
       <h4>Komunitas</h4>
-      <a href="#">TNXUS CLUB Community</a>
-      <a href="#">Join Reseller</a>
-      <a href="#">Brand Ambassador</a>
+      <a href="#">TNXUS CLUB Community</a>   
     </div>
     <div class="footer-col">
-      <h4>Informasi Penting</h4>
+      <h4>Informasi</h4>
       <a href="#">Cara Order</a>
-      <a href="#">Kebijakan Retur</a>
-      <a href="#">FAQ</a>
       <a href="#">Kontak Admin</a>
     </div>
   </div>
@@ -375,14 +371,14 @@ function checkoutWA(){
 
   let msg = `*ORDER BARU - TNXUS*%0A`;
   msg += `No Faktur: ${document.getElementById('invoiceNo').innerText}%0A%0A`;
+   msg += `%0A*DATA PEMBELI*%0A Nama: ${name}%0A No HP: ${phone}%0A Alamat: ${address}%0A`;
   msg += `*DETAIL PRODUK*%0A`;
   let total = 0;
   cart.forEach(item=>{
     msg += `• ${item.nama} - Ukuran ${item.size} x${item.qty} = Rp ${(item.harga*item.qty).toLocaleString()}%0A`;
     total += item.harga * item.qty;
   });
-  msg += `%0A*DATA PEMBELI*%0A Nama: ${name}%0A No HP: ${phone}%0A Alamat: ${address}%0A`;
-  msg += `%0A*TOTAL: Rp ${total.toLocaleString()}*%0A`;
+  msg += `%0A*TOTAL: Rp ${total.toLocaleString()}*%0A%0A`;
   msg += `Terimakasih sudah order, Mohon tunggu konfirmasi dari admin untuk informasi selanjutnya%0A`;
 
   window.open(`https://wa.me/${NO_WA_ADMIN}?text=${msg}`, '_blank');
