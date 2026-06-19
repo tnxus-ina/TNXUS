@@ -206,6 +206,9 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
     <span class="close" onclick="closeCart()">&times;</span>
     <h2>Checkout Pesanan</h2>
     <div class="no-faktur">No Faktur: <span id="invoiceNo">INV-XXXX</span></div>
+<div class="no-faktur" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--text-dim);font-weight:500;font-size:13px">
+  Tanggal: <span id="tanggalTransaksi"></span>
+</div>
     <div id="cartItems"></div>
     <div class="total">Total: Rp <span id="totalPrice">0</span></div>
     <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="custName"></div>
@@ -353,8 +356,29 @@ function updateCart(){
   document.getElementById('totalPrice').innerText = total.toLocaleString();
 }
 
+  function generateInvoice(){
+  const now = new Date();
+  const tahun = now.getFullYear();
+  const bulan = String(now.getMonth()+1).padStart(2,'0');
+  const tanggal = String(now.getDate()).padStart(2,'0');
+  const kode = Math.random().toString(36).substring(2,6).toUpperCase();
+  return `UT-${tahun}${bulan}${tanggal}-${kode}`;
+}
+
 function openCart(){
-  document.getElementById('invoiceNo').innerText = 'INV-'+Date.now().toString().slice(-6);
+  const now = new Date();
+  const tanggal = now.toLocaleString('id-ID', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  document.getElementById('invoiceNo').innerText = generateInvoice();
+  document.getElementById('tanggalTransaksi').innerText = tanggal;
+  
   updateCart();
   document.getElementById('modalCart').style.display = 'block';
 }
