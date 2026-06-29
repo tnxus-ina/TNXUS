@@ -181,6 +181,8 @@
         </div>
         <div class="flex flex-wrap gap-2 mt-2">
           <select onchange="ubahStatusPesanan('${p.nomorFaktur}', this.value)" class="text-sm bg-gelap border border-putih/10 rounded px-2 py-1.5">
+            <textarea id="catatan‑${p.nomorFaktur}" placeholder="Tambah catatan/info ke pembeli..." style="font-size:12px;flex:1;background:#0a0a0f;border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:6px;color:#fff;"></textarea>
+<button onclick="simpanCatatan('${p.nomorFaktur}')" class="text‑xs bg‑utama/10 text‑utama px‑2 py‑1 rounded">Simpan</button>
             <option value="Baru Masuk" ${p.status==='Baru Masuk'?'selected':''}>🔴 Baru Masuk</option>
             <option value="Sedang Dikemas" ${p.status==='Sedang Dikemas'?'selected':''}>🟡 Sedang Dikemas</option>
             <option value="Dikirim" ${p.status==='Dikirim'?'selected':''}>🔵 Sedang Dikirim</option>
@@ -204,6 +206,17 @@
       };
       return peta[s] || 'bg-kartu/50 text-redup';
     }
+
+    function simpanCatatan(faktur){
+  const teks = document.getElementById(`catatan‑${faktur}`).value.trim();
+  const daftar = ambilSemuaPesanan();
+  const data = daftar.find(i => i.nomorFaktur === faktur);
+  if(data){
+    data.catatanAdmin = teks;
+    simpanPerubahanPesanan(daftar);
+    alert('✅ Pesan/catatan sudah tersimpan — pembeli bisa melihatnya');
+  }
+}
 
     // --- FUNGSI PENGELOLAAN ---
     function ubahStatusPesanan(faktur, statusBaru){
