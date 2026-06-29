@@ -214,7 +214,7 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
     <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="custName"></div>
     <div class="form-group"><label>No HP *</label><input type="tel" id="custPhone"></div>
     <div class="form-group"><label>Alamat *</label><textarea id="custAddress" rows="3"></textarea></div>
-    <button class="btn-wa" onclick="checkoutWA()">Kirim Pesanan via WhatsApp</button>
+    <button class="btn-wa" onclick="checkoutAdmin()">Konfirmasi & Simpan Pesanan</button>
   </div>
 </div>
 
@@ -243,6 +243,20 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   </div>
   <div class="copy">© 2026 TNXUS. All Rights Reserved. Made with ❤️ in Indonesia</div>
 </footer>
+
+<!-- ✅ BAGIAN BARU: CEK STATUS PESANAN -->
+<section class="section" id="cek-pesanan" style="background:rgba(255,255,255,0.02);border-radius:16px;border:1px solid rgba(255,255,255,0.06);margin-top:60px;">
+  <h2 class="section-title">Cek Status Pesanan</h2>
+  <p class="section-desc">Masukkan nomor faktur yang Anda dapatkan saat memesan</p>
+  <div style="max-width:450px;">
+    <div class="form-group">
+      <label>Nomor Faktur</label>
+      <input type="text" id="cariFaktur" placeholder="Contoh: UT‑20260629‑ABC1" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;color:#fff;width:100%;">
+    </div>
+    <button class="btn-primary" onclick="tampilkanStatus()">Lihat Riwayat</button>
+    <div id="hasilStatus" style="margin-top:16px;display:none;"></div>
+  </div>
+</section>
 
 <script>
 // ========== SETTING UTAMA ==========
@@ -357,14 +371,13 @@ function updateCart(){
 }
 
   function generateInvoice(){
-  const now = new Date();
-  const tahun = now.getFullYear();
-  const bulan = String(now.getMonth()+1).padStart(2,'0');
-  const tanggal = String(now.getDate()).padStart(2,'0');
-  const kode = Math.random().toString(36).substring(2,6).toUpperCase();
-  return `UT-${tahun}${bulan}${tanggal}-${kode}`;
+  const sekarang = new Date();
+  const thn = sekarang.getFullYear();
+  const bln = String(sekarang.getMonth()+1).padStart(2,'0');
+  const tgl = String(sekarang.getDate()).padStart(2,'0');
+  const acak = Math.random().toString(36).substring(2,6).toUpperCase();
+  return `UT-${thn}${bln}${tgl}-${acak}`;
 }
-
 function openCart(){
   const now = new Date();
   const tanggal = now.toLocaleString('id-ID', {
@@ -386,30 +399,61 @@ function closeCart(){
   document.getElementById('modalCart').style.display = 'none';
 }
 
-function checkoutWA(){
-  if(cart.length === 0){alert('Keranjang kosong!');return}
+// ✅ FUNGSI BARU: Simpan Langsung ke Sistem Admin — TANPA BUKA WHATSAPP
+function checkoutAdmin(){
+  if(cart.length === 0){alert('❌ Keranjang masih kosong!');return;}
+
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
   const address = document.getElementById('custAddress').value.trim();
-  if(!name ||!phone ||!address){alert('Lengkapi data dulu');return}
 
-  let msg = `*ORDER BARU - TNXUS*%0A`;
-  msg += `No Faktur: ${document.getElementById('invoiceNo').innerText}%0A`;
-  msg += `Tanggal: ${document.getElementById('tanggalTransaksi').innerText}%0A%0A`;
-  msg += `*DATA PEMBELI*%0A Nama: ${name}%0A No HP: ${phone}%0A Alamat: ${address}%0A%0A`;
-  msg += `*DETAIL PRODUK*%0A`;
-  let total = 0;
-  cart.forEach(item=>{
-    msg += `• ${item.nama} - Ukuran ${item.size} x${item.qty} = Rp ${(item.harga*item.qty).toLocaleString()}%0A`;
-    total += item.harga * item.qty;
+  if(!name || !phone || !address){alert('⚠️ Harap lengkapi semua data diri terlebih dahulu!');return;}
+
+  // Buat nomor faktur & waktu otomatis
+  const noFaktur = generateInvoice();
+  const waktuTransaksi = new Date().toLocaleString('id-ID', {
+    weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
   });
-  msg += `%0A*TOTAL: Rp ${total.toLocaleString()}*%0A%0A`;
-  msg += `Terimakasih sudah order, Mohon tunggu konfirmasi dari admin untuk informasi selanjutnya%0A`;
 
-  window.open(`https://wa.me/${NO_WA_ADMIN}?text=${msg}`, '_blank');
+  // Susun data lengkap pesanan
+  const dataPesananBaru = {
+    nomorFaktur: noFaktur,
+    waktuTransaksi: waktuTransaksi,
+    waktu: new Date().toISOString(),
+    nama: name,
+    telepon: phone,
+    alamat: address,
+    daftarBarang: cart.map(i => ({
+      nama: i.nama, ukuran: i.size, jumlah: i.qty, totalHarga: i.harga * i.qty
+    })),
+    totalHarga: cart.reduce((jumlah, barang) => jumlah + (barang.harga * barang.qty), 0),
+    status: 'Baru Masuk',
+    catatanAdmin: ''
+  };
+
+  // Simpan ke tempat yang sama dibaca halaman admin
+  const daftarPesanan = JSON.parse(localStorage.getItem('tnxus_daftar_pesanan') || '[]');
+  daftarPesanan.unshift(dataPesananBaru);
+  localStorage.setItem('tnxus_daftar_pesanan', JSON.stringify(daftarPesanan));
+
+  // Tampilkan pesan berhasil & nomor faktur
+  alert(`✅ Pesanan Berhasil Diterima!
+
+📌 Nomor Faktur Anda: ${noFaktur}
+Simpan nomor ini untuk mengecek status pesanan nanti.
+
+Terima kasih telah berbelanja di TNXUS — kami akan segera memproses pesanan Anda.`);
+
+  // Kosongkan keranjang & tutup jendela pemesanan
   cart = [];
   updateCart();
   closeCart();
+
+  // Kosongkan isian formulir
+  document.getElementById('custName').value = '';
+  document.getElementById('custPhone').value = '';
+  document.getElementById('custAddress').value = '';
 }
 
 function updateTimer(){
@@ -438,6 +482,42 @@ window.onclick = function(e){
 }
 
 initSliders();
+
+// === SINKRONISASI DATA DARI ADMIN ===
+function ambilDataPesanan(){
+  return JSON.parse(localStorage.getItem('tnxus_daftar_pesanan') || '[]');
+}
+
+function tampilkanStatus(){
+  const nomor = document.getElementById('cariFaktur').value.trim().toUpperCase();
+  const kotak = document.getElementById('hasilStatus');
+  const daftar = ambilDataPesanan();
+  const cari = daftar.find(p => p.nomorFaktur === nomor);
+
+  if(!nomor){
+    kotak.innerHTML = `<p style="color:var(--text-dim)">Silakan masukkan nomor faktur</p>`;
+  }else if(!cari){
+    kotak.innerHTML = `<p style="color:var(--danger)">❌ Nomor faktur tidak ditemukan</p>`;
+  }else{
+    const warnaStatus = {
+      'Baru Masuk':'#ff3b3b',
+      'Sedang Dikemas':'#f59e0b',
+      'Dikirim':'#00d4ff',
+      'Selesai':'#22c55e',
+      'Dibatalkan':'#a1a1b3'
+    };
+    kotak.innerHTML = `
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;">
+        <p><strong>Nomor Faktur:</strong> ${cari.nomorFaktur}</p>
+        <p><strong>Waktu Pesan:</strong> ${cari.waktuTransaksi}</p>
+        <p><strong>Status Saat Ini:</strong> <span style="color:${warnaStatus[cari.status]};font-weight:700">${cari.status}</span></p>
+        <p><strong>Total Bayar:</strong> Rp ${cari.totalHarga.toLocaleString()}</p>
+        ${cari.catatanAdmin ? `<div style="margin-top:10px;padding:10px;background:rgba(0,212,255,0.05);border:1px dashed rgba(0,212,255,0.3);border-radius:8px;"><small style="color:var(--accent)">Pesan Admin:</small><br>${cari.catatanAdmin}</div>` : ''}
+      </div>
+    `;
+  }
+  kotak.style.display='block';
+}
 </script>
 </body>
 </html>
