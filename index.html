@@ -435,7 +435,7 @@ function checkoutAdmin(){
   // Simpan ke tempat yang sama dibaca halaman admin
   const daftarPesanan = JSON.parse(localStorage.getItem('tnxus_daftar_pesanan') || '[]');
   daftarPesanan.unshift(dataPesananBaru);
-  localStorage.setItem('tnxus_daftar_pesanan', JSON.stringify(daftarPesanan));
+  hubungkanPusat('simpan','tnxus_daftar_pesanan', JSON.stringify(daftarPesanan));
 
   // Tampilkan pesan berhasil & nomor faktur
   alert(`✅ Pesanan Berhasil Diterima!
@@ -518,6 +518,28 @@ function tampilkanStatus(){
   }
   kotak.style.display='block';
 }
+
+  <script>
+// ⚙️ ALAMAT HALAMAN ADMIN ANDA
+const ALAMAT_PUSAT = 'https://tnxus‑ina.github.io/tnxus‑admin/pusat‑data.html';
+const KUNCI_RAHASIA = 'TNXUS‑2026‑RAHASIA‑DATA‑ANDA‑DISINI'; // SAMA PERSIS DI ATAS
+let jembatan;
+
+function hubungkanPusat(perintah, kunci, nilaiKirim = '') {
+  if (!jembatan) {
+    jembatan = document.createElement('iframe');
+    jembatan.src = ALAMAT_PUSAT;
+    jembatan.style.display = 'none';
+    document.body.appendChild(jembatan);
+  }
+  jembatan.onload = () => {
+    jembatan.contentWindow.postMessage(
+      { perintah, kunci, nilai: nilaiKirim, sandi: KUNCI_RAHASIA }, '*'
+    );
+  };
+}
+</script>
+  
 </script>
 </body>
 </html>
