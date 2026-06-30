@@ -388,7 +388,7 @@ function closeCart(){
   document.getElementById('modalCart').style.display = 'none';
 }
 
-async function checkoutWA(){
+function checkoutWA(){
   if(cart.length === 0){alert('Keranjang kosong!');return}
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
@@ -454,7 +454,6 @@ window.onclick = function(e){
 }
 
 initSliders();
-  
   }
 
   // === AMBIL DATA TERBARU DARI ADMIN ===
@@ -471,7 +470,7 @@ async function muatDataProduk() {
 }
 
 // === KIRIM SALINAN PESANAN KE DATABASE ===
-async function catatPesananKeSistem(dataPesanan) {
+function catatPesananKeSistem(dataPesanan) {
   try {
     await fetch(`${ALAMAT_API}?kunci=${KUNCI_RAHASIA}`, {
       method: "POST",
