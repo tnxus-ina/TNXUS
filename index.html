@@ -215,6 +215,14 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
   </div>
 </div>
 
+<div style="max-width: 500px; margin: 3rem auto; padding: 1rem;">
+  <h3>Cek Status Pesanan</h3>
+  <input type="text" id="inputFaktur" placeholder="Masukkan No Faktur" style="padding: 0.7rem; width: 70%;">
+  <button onclick="cekStatus()" style="padding: 0.7rem;">Cek</button>
+  <div id="hasil" style="margin-top: 1rem;"></div>
+</div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-wrap">
@@ -244,6 +252,8 @@ footer{background:#05050a;border-top:1px solid rgba(255,255,255,0.06);margin-top
 <script>
 // ========== SETTING UTAMA ==========
 const SHOW_READY_STOCK = false; // GANTI TRUE KALAU MAU MUNCULIN READY STOCK
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxdxrvkapxPJ7cjznS_m4LLfE3MOZToQfOn1e8H8H_I3NuYQsCWTP4IRUc_XApZShVY/exec";
+const KUNCI = "tnxus_2026";
 const NO_WA_ADMIN = '6282225124561';
 const DEADLINE_PREORDER = '2026-06-20T23:59:59';
 // =====================================
@@ -361,7 +371,7 @@ function openCart(){
 function closeCart(){
   document.getElementById('modalCart').style.display = 'none';
 }
-
+  
 function checkoutWA(){
   if(cart.length === 0){alert('Keranjang kosong!');return}
   const name = document.getElementById('custName').value.trim();
@@ -387,6 +397,50 @@ function checkoutWA(){
   closeCart();
 }
 
+function prosesPesanan() {
+  // Ambil data dari form toko kamu
+  const dataPesanan = {
+    kunci: KUNCI,
+    noFaktur: "TNX" + Date.now(), // Nomor faktur otomatis
+    nama: document.getElementById("nama").value,
+    noHP: document.getElementById("noHP").value,
+    alamat: document.getElementById("alamat").value,
+    produk: "Kaos Premium / Hijab [Model X]",
+    total: "Rp 199.000",
+    catatan: document.getElementById("catatan").value || ""
+  };
+
+  await fetch(URL_SCRIPT, {
+    method: "POST",
+    body: JSON.stringify(dataPesanan)
+  });
+}
+
+function cekStatus() {
+  const noFaktur = document.getElementById("inputFaktur").value.trim();
+  const hasil = document.getElementById("hasil");
+  if(!noFaktur) return hasil.innerHTML = "<p style='color:red'>Masukkan nomor faktur dulu!</p>";
+
+  try {
+    const res = await fetch(`${URL_SCRIPT}?kunci=${KUNCI}&noFaktur=${noFaktur}`);
+    const data = await res.json();
+
+    if(data.length === 0) {
+      hasil.innerHTML = "<p style='color:red'>Nomor tidak ditemukan!</p>";
+    } else {
+      hasil.innerHTML = `
+        <div style="border:1px solid #ddd; padding:1rem; border-radius:8px;">
+          <p>No Faktur: <strong>${data[0][0]}</strong></p>
+          <p>Status: <strong>${data[0][6]}</strong></p>
+          <p>Terakhir diupdate: ${new Date(data[0][7]).toLocaleString('id-ID')}</p>
+        </div>
+      `;
+    }
+  } catch {
+    hasil.innerHTML = "<p style='color:red'>Gagal terhubung!</p>";
+  }
+}
+  
 function updateTimer(){
   const deadline = new Date(DEADLINE_PREORDER).getTime();
   const now = new Date().getTime();
